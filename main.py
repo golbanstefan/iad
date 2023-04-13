@@ -25,13 +25,14 @@ geo_df = geopandas.GeoDataFrame(
 )
 print(geo_df.head())
 
-map = folium.Map(location=[47.036953, 28.833097, ], tiles="OpenStreetMap", zoom_start=7)
+# Your existing code for creating the map
+map = folium.Map(location=[47.036953, 28.833097], tiles="OpenStreetMap", zoom_start=7)
 
 heat_data = [[point.xy[0][0], point.xy[1][0]] for point in geo_df.geometry]
-print(heat_data[0])
 plugins.HeatMap(heat_data, radius=12).add_to(map)
 
-st.pyplot(map)
+# Display the map in Streamlit
+sf.folium_static(map)
 
 
 df.drop(columns=['Title',
