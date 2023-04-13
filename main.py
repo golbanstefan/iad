@@ -169,6 +169,7 @@ autolabel(rects2)
 st.pyplot(fig)
 
 
+# Input widgets
 st.header("Predict the price of an apartment")
 
 total_area = st.number_input("Total Area (sq. meters)", value=50, min_value=10, max_value=500, step=1)
@@ -180,15 +181,18 @@ number_of_floors = st.number_input("Number of floors in the building", value=5, 
 housing_type = st.selectbox("Housing Type", ['Construcţii noi', 'Secundar'])
 condition = st.selectbox("Condition", ['Are nevoie de reparație', 'Construcție nefinisată', 'Dat în exploatare', 'Design individual', 'Euroreparație', 'Fără reparație', 'La alb', 'Reparație cosmetică'])
 
-# One-hot encoding for categorical inputs
-housing_type_encoded = OH_encoder.transform([[housing_type]])[0]
-condition_encoded = OH_encoder.transform([[condition]])[0]
+# Create a dataframe with user inputs
+input_df = pd.DataFrame([[total_area, nr_rooms, balcony, floor, number_of_floors, housing_type, condition]], columns=['TotalArea', 'NrRooms', 'Balcony', 'Floor', 'NumberOfFloors', 'HousingType', 'Condition'])
 
-# Combine all input data
-input_data = np.array([total_area, nr_rooms, balcony, floor, number_of_floors] + list(housing_type_encoded) + list(condition_encoded)).reshape(1, -1)
+# One-hot encoding for categorical inputs
+input_OH_cols = pd.DataFrame(OH_encoder.transform(input_df[object_cols]))
+input_OH_cols.index = input_df.index
+input_OH_cols.columns = OH_encoder.get_feature_names_out()
+input_df_final = input_df.drop(object_cols, axis=1)
+input_df_final = pd.concat([input_df_final, input_OH_cols], axis=1)
 
 # Make a prediction using the best model (replace `ols` with the best-performing model)
-prediction = ols.predict(input_data)
+prediction = ols.predict(input_df_final)
 
 # Display the prediction
-st.header(f"Predicted Price: {prediction[0]:,.2f} EUR")
+st.header(f"Predicted Price: {prediction[0]:,.2f} MDL")
