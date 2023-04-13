@@ -58,6 +58,21 @@ sns.boxplot(x='NrRooms', y='Price', data=df_final, ax=ax)
 ax.set_title('Price distribution by NrRooms')
 st.pyplot(fig)
 
+
+#%%
+def remove_outliers_iqr(dataframe, columns, multiplier=1.5):
+    for column in columns:
+        Q1 = dataframe[column].quantile(0.25)
+        Q3 = dataframe[column].quantile(0.75)
+        IQR = Q3 - Q1
+
+        lower_bound = Q1 - multiplier * IQR
+        upper_bound = Q3 + multiplier * IQR
+
+        dataframe = dataframe[(dataframe[column] >= lower_bound) & (dataframe[column] <= upper_bound)]
+
+    return dataframe
+
 # Remove outliers based on 'Price' and 'NrRooms' columns
 df_no_outliers = remove_outliers_iqr(df_final, columns=['Price', 'NrRooms'])
 
