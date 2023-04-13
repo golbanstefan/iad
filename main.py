@@ -3,6 +3,7 @@ import pandas as pd
 import geopandas as geopandas
 import numpy as np
 from folium import plugins, folium
+import streamlit_folium as sf
 from matplotlib import pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import OneHotEncoder
@@ -23,6 +24,7 @@ geo_df = geopandas.GeoDataFrame(
     df[["Title", "Price", "Lon", "Lat"]], geometry=geometry
 )
 print(geo_df.head())
+
 map = folium.Map(location=[47.036953, 28.833097, ], tiles="OpenStreetMap", zoom_start=7)
 
 heat_data = [[point.xy[0][0], point.xy[1][0]] for point in geo_df.geometry]

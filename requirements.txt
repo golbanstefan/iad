@@ -8,3 +8,5 @@ seaborn
 matplotlib
 hyperopt
 geopandas
+folium
+streamlit-folium
