@@ -195,4 +195,4 @@ input_df_final = pd.concat([input_df_final, input_OH_cols], axis=1)
 prediction = ols.predict(input_df_final)
 
 # Display the prediction
-st.header(f"Predicted Price: {prediction[0]:,.2f} MDL")
+st.header(f"Predicted Price: {prediction[0]:,.2f} EUR")
