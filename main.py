@@ -16,7 +16,7 @@ from sklearn.metrics import r2_score as r2
 # Your code, refactored for Streamlit
 
 # Importing dataset:
-df = pd.read_json('preprocessed.json')
+df = pd.read_json('preprocessed_old.json')
 
 # Transform coordinates to geopandas
 geometry = geopandas.points_from_xy(df.Lat, df.Lon)
