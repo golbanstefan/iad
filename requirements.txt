@@ -3,7 +3,6 @@ folium
 pandas
 xgboost
 numpy
-sklearn
 scikit-learn
 seaborn
 matplotlib
